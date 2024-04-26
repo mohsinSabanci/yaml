@@ -1,0 +1,59 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: A
+  displayName: 'Starting Point'
+  jobs:
+  - job: D
+    displayName: 'Job D'
+    steps:
+    - script: echo Job D is running
+  - job: E
+    displayName: 'Job E'
+    steps:
+    - script: echo Job E is running
+
+- stage: B
+  displayName: 'Stage Component A'
+  dependsOn: A
+  jobs:
+  - job: D
+    displayName: 'Job D'
+    steps:
+    - script: echo Job D is running
+  - job: E
+    displayName: 'Job E'
+    steps:
+    - script: echo Job E is running
+
+- stage: C
+  displayName: 'Stage Component B'
+  dependsOn: A
+  jobs:
+  - job: D
+    displayName: 'Job D'
+    steps:
+    - script: echo Job D is running
+  - job: E
+    displayName: 'Job E'
+    steps:
+    - script: echo Job E is running
+
+- stage: D
+  displayName: 'Stage Component C'
+  dependsOn: 
+  - B
+  - C
+  jobs:
+  - job: D
+    displayName: 'Job D'
+    steps:
+    - script: echo Job D is running
+  - job: E
+    displayName: 'Job E'
+    steps:
+    - script: echo Job E is running
